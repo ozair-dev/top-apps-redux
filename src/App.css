@@ -1,0 +1,224 @@
+.App{
+  display:  flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header{
+  width: 100%;
+  background-color: hsl(277, 100%, 61%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+
+.header label{
+  font-size: 1.6rem;
+  color: white;
+  text-align: right;
+  margin: auto;
+}
+.header input{
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 100%;
+}
+
+
+.title{
+  color: white;
+  font-size: 5rem;
+  font-weight: 600;
+  margin:  2rem auto;
+  text-align: center;
+}
+
+.add-app-toggle, .apply-filters-toggle{
+  color: white;
+  background-color: hsl(277, 100%, 53%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  font-size: 2rem;
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  transition: all 0.5s;
+}
+
+.add-app-toggle.open, .apply-filters-toggle.open{
+  border-bottom-right-radius: 0%;
+  border-bottom-left-radius: 0%;
+}
+
+.add-app-toggle:active, .apply-filters-toggle:active{
+  background-color: hsl(277, 100%, 80%);
+}
+
+.add-app-toggle .add-icon{
+  font-size: 3rem;
+}
+
+.apply-filters-toggle .filter-icon{
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.add-app-form, .apply-filters-form{
+  width:  40%;
+  background-color: hsl(277, 100%, 53%);
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 0.5rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+.add-app-form.open, .apply-filters-form.open{
+    padding: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    opacity: 1;
+    max-height: 100vh;
+}
+
+
+.min-max-div{
+  margin-top: 1rem;
+  grid-column: 1/3;
+}
+.min-max-div p{
+  font-size: 2rem;
+  color: white;
+}
+.min-max-div > div{
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr 3fr;
+}
+
+.submit-button{
+  grid-column: 1/span 2;
+  width: 25%;
+  margin: auto;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  font-size: 1.8rem;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  background-color: orange;
+}
+
+.apply-filters-form .search-icon{
+  font-size: 2.5rem;
+  margin-left: 1rem;
+}
+
+.warning{
+  color: cyan;
+  font-size: 1.5rem;
+  grid-column: 1/span 2;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.apps{
+  margin-top: 2rem;
+  width: 85%;
+}
+
+.apps, .apps th, .apps td{
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+
+.apps tr{
+  height: 3rem;
+}
+
+.apps th{
+  font-size: 1.8rem;
+  color: #777777;
+}
+.apps td{
+  position: relative;
+  padding: 0.3rem;
+  font-size: 1.7rem;
+  text-align: center;
+  color: #3c3c3c;
+  overflow: hidden;
+}
+
+.apps td.editable:after{
+  content: "\270D";
+  color: white;
+  font-size: 4rem;
+  width: 100%;
+  height: 100%;
+  background-color: #4caf50;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s;
+}
+
+.apps td.editable:hover:after{
+  top: 0%;
+}
+
+.app-name{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app-name img{
+  max-width: 3rem;
+  max-height: 100%;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+}
+
+.apps .calender-icon, .apps .users-icon, .apps .download-icon{
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+
+.apps button{
+  border: none;
+  background-color: white;
+  font-size: 2.5rem;
+  border-radius: 0.3rem;
+}
+.apps .favourite-button{
+  color: #2196f3;
+}
+
+.apps .favourite-button.favourite{
+  color: white;
+  background-color: #2196f3;
+}
+
+.apps .delete-button{
+  color: white;
+  background-color: red;
+}
+
+.apps button svg{
+  vertical-align: middle;
+}
+
+@media(max-width: 720px){
+  .add-app-toggle, .apply-filters-toggle, .add-app-form, .apply-filters-form{
+    width: 85%;
+ }
+}
+

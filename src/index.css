@@ -1,0 +1,22 @@
+html{
+  font-size: 10px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+html, body{
+  margin: 0;
+  padding: 0;
+}
+
+*, *:before, *:after{
+  box-sizing: inherit;
+}
+
+p{
+  margin: 0;
+}
+
+input:focus{
+  outline: none;
+}

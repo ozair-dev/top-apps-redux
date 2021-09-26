@@ -3,7 +3,8 @@ import { createSelector } from 'reselect';
 function appsReducer(state = [], action) {
   switch (action.type) {
     case 'apps/appAdded':
-      const newAppId = new Date().getTime();
+      const newAppId = (state[state.length - 1]?.id + 1) || 0;
+      console.log(newAppId)
       return [...state, { ...action.payload, id: newAppId }];
     case 'apps/usersUpdated':
       return state.map((app) => {
@@ -69,10 +70,10 @@ function filterApps(apps, filters) {
     for (const i in filters) {
       if (filters[i]) {
         if (i === 'name' || i === 'catagory') condition = app[i].toLowerCase().includes(filters[i].toLowerCase());
-        if (i === 'downloadsMin') condition = expandNum(app.downloads) >= expandNum(filters[i]);
-        if (i === 'downloadsMax') condition = expandNum(app.downloads) <= expandNum(filters[i]);
-        if (i === 'usersMin') condition = expandNum(app.users) >= expandNum(filters[i]);
-        if (i === 'usersMax') condition = expandNum(app.users) <= expandNum(filters[i]);
+        else if (i === 'downloadsMin') condition = expandNum(app.downloads) >= expandNum(filters[i]);
+        else if (i === 'downloadsMax') condition = expandNum(app.downloads) <= expandNum(filters[i]);
+        else if (i === 'usersMin') condition = expandNum(app.users) >= expandNum(filters[i]);
+        else if (i === 'usersMax') condition = expandNum(app.users) <= expandNum(filters[i]);
         if (!condition) break;
       }
     }

@@ -1,63 +1,52 @@
-import { createSelector } from 'reselect';
+import { createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 
-function appsReducer(state = [], action) {
-  switch (action.type) {
-    case 'apps/appAdded':
-      const newAppId = (state[state.length - 1]?.id + 1) || 0;
-      return [...state, { ...action.payload, id: newAppId }];
-    case 'apps/usersUpdated':
-      return state.map((app) => {
-        if (app.id === action.payload.id) {
-          return { ...app, users: action.payload.users };
-        }
-        return app;
-      });
-    case 'apps/downloadsUpdated':
-      return state.map((app) => {
-        if (app.id === action.payload.id) {
-          return { ...app, downloads: action.payload.downloads };
-        }
-        return app;
-      });
-    case 'apps/toggledFavourite':
-      return state.map((app) => {
-        if (app.id === action.payload.id) {
-          return { ...app, favourite: !app.favourite };
-        }
-        return app;
-      });
-    case 'apps/deletedApp':
-      return state.filter((app) => app.id !== action.payload.id);
-    default:
-      return state;
+function localState() {
+  try {
+    const apps = localStorage.getItem('apps');
+    if (apps === null) return [];
+    return JSON.parse(apps);
+  } catch (err) {
+    return [];
   }
 }
+
+const initialState = localState();
+
+const appsSlice = createSlice({
+  name: 'apps',
+  initialState,
+  reducers: {
+    appAdded: {
+      reducer(state, action) {
+        state.push({ ...action.payload });
+      },
+      prepare(obj) {
+        return { payload: { ...obj, id: nanoid() } };
+      },
+    },
+    usersUpdated(state, action) {
+      const app = state.find((item) => item.id === action.payload.id);
+      app.users = action.payload.users;
+    },
+    downloadsUpdated(state, action) {
+      const app = state.find((item) => item.id === action.payload.id);
+      app.downloads = action.payload.downloads;
+    },
+    toggledFavourite(state, action) {
+      const app = state.find((item) => item.id === action.payload.id);
+      app.favourite = !app.favourite;
+    },
+    deletedApp(state, action) {
+      return state.filter((app) => app.id !== action.payload.id);
+    },
+  },
+});
 
 function expandNum(str) {
   const num = str.slice(0, str.length - 1);
   const alp = str[str.length - 1].toLowerCase();
   const alpVal = { m: 10 ** 6, b: 10 ** 9 };
   return +num * alpVal[alp];
-}
-
-function appAdded(app) {
-  return { type: 'apps/appAdded', payload: app };
-}
-
-function usersUpdated(id, users) {
-  return { type: 'apps/usersUpdated', payload: { id, users } }
-}
-
-function downloadsUpdated(id, downloads) {
-  return { type: 'apps/downloadsUpdated', payload: { id, downloads } };
-}
-
-function toggledFavourite(id) {
-  return { type: 'apps/toggledFavourite', payload: { id } };
-}
-
-function deletedApp(id) {
-  return { type: 'apps/deletedApp', payload: { id } };
 }
 
 const selectApps = (state) => state.apps;
@@ -91,14 +80,8 @@ const selectCatagories = createSelector(selectApps, (apps) => {
   return catagories.filter((cat, index) => catagories.indexOf(cat) === index);
 });
 
-export {
-  appsReducer,
-  appAdded,
-  downloadsUpdated,
-  usersUpdated,
-  toggledFavourite,
-  deletedApp,
-  appsSelector,
-  selectAppById,
-  selectCatagories,
-};
+export const { appAdded, downloadsUpdated, usersUpdated, toggledFavourite, deletedApp } = appsSlice.actions;
+
+export { appsSelector, selectAppById, selectCatagories };
+
+export default appsSlice.reducer;

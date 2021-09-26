@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import cs from 'classnames' 
+import cs from 'classnames';
 import { MdDateRange, MdDelete } from 'react-icons/md';
 import { FiDownload } from 'react-icons/fi';
 import { FaUsers } from 'react-icons/fa';
@@ -25,10 +25,10 @@ const AppRow = (props) => {
       <td
         className="editable"
         onClick={() => {
-          const newUsers = prompt('Enter users');
+          const newUsers = prompt('Enter users', users);
           if (newUsers) {
             if (/^\d+(.\d+)?(B|M)$/i.test(newUsers)) {
-              dispatch(usersUpdated(id, newUsers));
+              dispatch(usersUpdated({id, users: newUsers}));
             } else {
               alert('Invalid Value');
             }
@@ -41,10 +41,10 @@ const AppRow = (props) => {
       <td
         className="editable"
         onClick={() => {
-          const newDownloads = prompt('Enter downloads');
+          const newDownloads = prompt('Enter downloads', downloads);
           if (newDownloads) {
             if (/^\d+(.\d+)?(B|M)$/i.test(newDownloads)) {
-              dispatch(downloadsUpdated(id, newDownloads));
+              dispatch(downloadsUpdated({id, downloads: newDownloads}));
             } else {
               alert('Invalid Value');
             }
@@ -58,7 +58,7 @@ const AppRow = (props) => {
         <button
           type="button"
           className={cs('favourite-button', { favourite })}
-          onClick={() => dispatch(toggledFavourite(id))}
+          onClick={() => dispatch(toggledFavourite({ id }))}
         >
           <BiRocket />
         </button>
@@ -69,7 +69,7 @@ const AppRow = (props) => {
           className="delete-button"
           onClick={() => {
             if (confirm('Are you sure?')) {
-              dispatch(deletedApp(id));
+              dispatch(deletedApp({ id }));
             }
           }}
         >

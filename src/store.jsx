@@ -1,15 +1,6 @@
-import { createStore } from 'redux';
-import rootReducer from './reducer';
-
-function localState() {
-  try {
-    const apps = localStorage.getItem('apps');
-    if (apps === null) return undefined;
-    return { apps: JSON.parse(apps), filters: {} };
-  } catch (err) {
-    return undefined;
-  }
-}
+import { configureStore } from '@reduxjs/toolkit';
+import { appsReducer } from './features/apps';
+import { filtersReducer } from './features/filters';
 
 function saveState(obj) {
   try {
@@ -19,8 +10,12 @@ function saveState(obj) {
     //  ignore
   }
 }
-
-const store = createStore(rootReducer, localState());
+const store = configureStore({
+  reducer: {
+    apps: appsReducer,
+    filters: filtersReducer,
+  },
+});
 store.subscribe(() => saveState(store.getState()));
 
 export default store;

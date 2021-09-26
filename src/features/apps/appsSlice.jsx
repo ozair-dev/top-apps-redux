@@ -4,7 +4,6 @@ function appsReducer(state = [], action) {
   switch (action.type) {
     case 'apps/appAdded':
       const newAppId = (state[state.length - 1]?.id + 1) || 0;
-      console.log(newAppId)
       return [...state, { ...action.payload, id: newAppId }];
     case 'apps/usersUpdated':
       return state.map((app) => {

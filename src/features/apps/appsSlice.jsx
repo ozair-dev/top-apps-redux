@@ -1,16 +1,6 @@
 import { createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 
-function localState() {
-  try {
-    const apps = localStorage.getItem('apps');
-    if (apps === null) return [];
-    return JSON.parse(apps);
-  } catch (err) {
-    return [];
-  }
-}
-
-const initialState = localState();
+const initialState = [];
 
 const appsSlice = createSlice({
   name: 'apps',
